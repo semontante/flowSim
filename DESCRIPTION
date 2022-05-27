@@ -1,0 +1,29 @@
+Package: flowSim
+Title: visualize, identify and remove redudant information from a bivariate FCM dataset
+Version: 0.9
+Authors@R: 
+    person(given = "Sebastiano",
+           family = "Montante",
+           role = c("aut", "cre"),
+           email = "semont93@gmail.com")
+Description: flowSim is a tool designed to remove redundant examples from a bivariate FCM dataset. It also includes several visualization options to easily identify the similarity relationships between the files.
+License: `use_mit_license()`, `use_gpl3_license()`
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports:
+	sm,
+	parallel,
+	igraph,
+	visNetwork,
+	RColorBrewer,
+	utils,
+	pracma,
+	stats,
+	Rtsne,
+	ggplot2,
+	doSNOW,
+	foreach,
+	NbClust,
+	anocva
