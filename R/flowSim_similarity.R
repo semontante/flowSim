@@ -166,7 +166,8 @@ get_similarity_all_plots_v2<-function(n_samples=NULL,path_dir,thr_score=0.9,
   start<-Sys.time()
   #---------- Features df -------------------
   print("------- Features df generation --------")
-  df_features<-import_df_features(n_samples=n_samples,paths_dir =  path_dir,n_cores = n_cores)
+  df_features<-import_df_features(n_samples=n_samples,paths_dir =  path_dir,n_cores = n_cores,
+                                  progress_bar = progress_bar)
   #------------ Get all plot names ---------------
   # plot names will be the nodes of our network
   print(sprintf("Total number of plots: %s",nrow(df_features)))
