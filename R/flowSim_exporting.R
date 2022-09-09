@@ -8,11 +8,12 @@
 #' If path_output=NULL, no plots are generated. Default to NULL
 #' @param n_cores Number of cores to use. Default to 1
 #' @param path_gates Path of gates data, default to NULL
-#' @return A list of the samples names for each group.
+#' @return A list of all file names for each group.
 #' @export
 #' @examples 
 #' \donttest{exports_plots(visnetdata=visnetdata,path_expr_data="path to input directory",path_output=NULL,n_cores=1)}
-exports_plots<-function(visnetdata,path_expr_data,path_output=NULL,n_cores=1,path_gates=NULL){
+exports_plots<-function(visnetdata,path_expr_data,path_output=NULL,n_cores=1,type="dens",
+                        path_gates=NULL){
   nodes_data<-visnetdata$nodes
   nodes_data$group<-as.numeric(nodes_data$group)
   groups<-unique(nodes_data$group)
@@ -89,7 +90,7 @@ exports_plots<-function(visnetdata,path_expr_data,path_output=NULL,n_cores=1,pat
 
 #' exports_filtered_plots
 #' 
-#' function to export only the automatically selected plots for each group
+#' function to export only the files to keep for each group
 #' @param visnetdata list of dataframes containing the edges and nodes information in VisNetwork format
 #' @param df_features A dataframe containing the original features set (before the tsne reduction) of all input files
 #' @param path_expr_data Path to directory containing the expression data of the files analyzed
@@ -100,14 +101,14 @@ exports_plots<-function(visnetdata,path_expr_data,path_output=NULL,n_cores=1,pat
 #' by the hierarchical clustering. Default to 2.1
 #' @param plot_dendrogram If True, the plot of the dendrogram is generated (It may fail for some groups). Default to False.
 #' @param seed_n Set seed number. Default to 40.
-#' @return A list of the selected samples names for each group
+#' @return A list of the selected files names to keep for each group
 #' @export
 #' @examples 
 #' \donttest{exports_filtered_plots(visnetdata=visnetdata,df_features=df_features,
 #' path_expr_data="path to input directory",path_output=NULL,n_cores=1,filter_thr=2.1,plot_dendrogram=F)}
 
 exports_filtered_plots<-function(visnetdata,df_features,path_expr_data,
-                                 path_output=NULL,n_cores=1,filter_thr=2.1,
+                                 path_output=NULL,n_cores=1,type="dens",filter_thr=2.1,
                                  plot_dendrogram=F,seed_n=40){
   set.seed(40)
   nodes_data<-visnetdata$nodes

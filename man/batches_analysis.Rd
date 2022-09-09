@@ -4,8 +4,8 @@
 \alias{batches_analysis}
 \title{batches_analysis}
 \usage{
-batches_analysis(all_groups, n_cores, final_df, all_plots_names,
-  paths_all_plots, thr_score, progress_bar = T)
+batches_analysis(all_groups, n_cores, final_df, path_dir, thr_score,
+  progress_bar = T, nboots)
 }
 \arguments{
 \item{all_groups}{All batches names to analyze}
@@ -14,18 +14,18 @@ batches_analysis(all_groups, n_cores, final_df, all_plots_names,
 
 \item{final_df}{Dataframe of features reduced}
 
-\item{all_plots_names}{All plots names under analysis}
-
-\item{paths_all_plots}{Path of all plots under analysis}
+\item{path_dir}{Path to input directory. Mandatory.}
 
 \item{thr_score}{Threshold for filtering the similarity scores}
 
 \item{progress_bar}{If False,disable progress bar.}
+
+\item{nboots}{Number of bootstrap simulations for the  density identiy test. Default to 6}
 }
 \value{
 List of results batch analysis
 }
 \description{
-function to analyze each batch. Internal function.
+function to analyze each batch. A batch is a fragment of the original dataset. Internal function.
 }
 \keyword{Internal}

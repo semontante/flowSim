@@ -5,7 +5,7 @@
 \title{exports_filtered_plots}
 \usage{
 exports_filtered_plots(visnetdata, df_features, path_expr_data,
-  path_output = NULL, n_cores = 1, filter_thr = 2.1,
+  path_output = NULL, n_cores = 1, type = "dens", filter_thr = 2.1,
   plot_dendrogram = F, seed_n = 40)
 }
 \arguments{
@@ -28,10 +28,10 @@ by the hierarchical clustering. Default to 2.1}
 \item{seed_n}{Set seed number. Default to 40.}
 }
 \value{
-A list of the selected samples names for each group
+A list of the selected files names to keep for each group
 }
 \description{
-function to export only the automatically selected plots for each group
+function to export only the files to keep for each group
 }
 \examples{
 \donttest{exports_filtered_plots(visnetdata=visnetdata,df_features=df_features,

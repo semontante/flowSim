@@ -2,11 +2,12 @@
 % Please edit documentation in R/flowSim_similarity.R
 \name{get_similarity_all_plots_v2}
 \alias{get_similarity_all_plots_v2}
-\title{Generate similarity scores all files second version}
+\title{Generate similarity scores all files V2 mode}
 \usage{
 get_similarity_all_plots_v2(n_samples = NULL, path_dir,
   thr_score = 0.9, n_cores = 1, n_batches = NULL,
-  show_tsne_plot = T, progress_bar = T, size_points_tsne = 2)
+  show_tsne_plot = T, progress_bar = T, size_points_tsne = 15,
+  nboots = 6)
 }
 \arguments{
 \item{n_samples}{Number of files to analyze. If NULL, all input files are anayzed. Default to NULL.}
@@ -19,13 +20,15 @@ get_similarity_all_plots_v2(n_samples = NULL, path_dir,
 
 \item{n_batches}{Number of batches to use = number of parts in which the input datasets must be divided to
 increase speed and memory efficiency. If number of files <= 2000 files, this integer is automatically estimated,
-otherwise it needs to be defined. As the value increases, less memory and time is required.}
+otherwise it needs to be defined. As the value increases, less memory and time is required but also more residual homogeneity is generated.}
 
 \item{show_tsne_plot}{show scatter plot of tsne reduced dataset of the density features. Default to True.}
 
 \item{progress_bar}{if False,disable progress bar. Default to True.}
 
 \item{size_points_tsne}{Size of points in t-sne plot. Default to 2}
+
+\item{nboots}{Number of bootstrap simulations for the  density identiy test. Default to 6}
 }
 \value{
 A list of three dataframes
@@ -34,7 +37,7 @@ $nodes : A dataframe containing several nodes information (Node ID,cluster color
 $df_features: A dataframe containing the original features set (before the tsne reduction) of all input files
 }
 \description{
-function to generate the similarity scores for all the files within the input directory. Second version, for big datasets.
+function to generate the similarity scores for all the files within the input directory. V2 mode (for big datasets)
 }
 \examples{
 \donttest{get_similarity_all_plots_v2(n_samples=1:2000,path_dir="path to input directory",thr_score=0.9,n_cores=1,n_batches=NULL,show_tsne_plot=T)}

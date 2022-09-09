@@ -95,9 +95,9 @@ get_heterogeneity_score<-function(igraph_network,partition_vec,visnetdata){
   score_2<-round(score_2,2)
   print(sprintf("modularity score: %s",score_2))
   final_score<- (score_1 + score_2)/2
-  if(edges_prop<=0.1){
+  if(edges_prop<=0.01){
     final_score<- score_1 
-  }  
+  }
   final_score<-round(final_score,2)
   return(final_score)
 }
@@ -186,7 +186,6 @@ get_hull_all_gates<-function(gated_df){
   return(list_df_hull)
 }
 
- 
 #' get_inds_files_selected
 #' 
 #' function to get indices for the paths of the files selected
@@ -222,7 +221,7 @@ get_inds_files_selected<-function(path_dir,files_selected,return_path=F){
 #' 
 #' Function to rename files within a directory
 #' @param path_dir path of the directory with files to rename
-#' @param to_replace Pattern to replace. if to_replace_fixed=F, regex expression can be used.
+#' @param to_replace Pattern to replace. if to_replace_fixed=F, regex expression can be used. 
 #' @param string string to replace the pattern selected
 #' @param to_replace_fixed if False, to_replace can be also a regex expression. Default to True.
 #' @return NULL
@@ -234,8 +233,7 @@ rename_files<-function(path_dir,to_replace,string,to_replace_fixed=T){
   old_paths<-list.files(path_dir,full.names = T,recursive = T)
   sapply(1:length(old_paths),function(i){
     old_path_i<-old_paths[i]
-    new_path_i<-gsub(to_replace,string,old_path_i,fixed = to_replace_fixed)
+    new_path_i<-sub(to_replace,string,old_path_i,fixed = to_replace_fixed)
     file.rename(old_path_i,new_path_i)
   })
 }
-

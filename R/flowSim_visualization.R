@@ -2,27 +2,15 @@
 #' show_plot
 #' 
 #' function to visualize the selected plot using the flowSim_plot or flowSim_plot_dens function
-#' @param path_data Path to the directory with all the files
-#' @param name_plot Name of the file to show
+#' @param path_data_file Path to the csv files to visualize
 #' @param type type of visualization: "classic" or "dens". Default to classic. 
-#' the "dens" version has the densities of the markers on the side of each axis.
+#' the "dens" version has the density of the markers on the side of each axis.
 #' @return Plot object
 #' @export
 #' @examples 
 #' \donttest{show_plot(path_data="path to input directory",type="classic")}
-show_plot<-function(path_data,name_plot,type="classic"){
-  #---------- get all paths PD data -------------------
-  print("--------- Paths extraction for input PD expression data---------")
-  path_all_data<-list.files(path_data,full.names = T,pattern = "*.csv",recursive = T)
-  #---------- import expression reference plot name --------
-  print(sprintf("----- import expression data plot selected: %s --------",name_plot))
-  ind<-grep(name_plot,path_all_data,fixed = T)
-  if(length(ind)==0){
-    stop("selected plot not found")
-  }else if(length(ind)>1){
-    stop("selected plot multiple matches")
-  }
-  df_plot<-read.csv(path_all_data[ind])
+show_plot<-function(path_data_file,type="classic"){
+  df_plot<-read.csv(path_data_file)
   if(type=="classic"){
     plot_selected<-flowSim_plot(df_plot)
   }else if(type=="dens"){
@@ -57,10 +45,8 @@ flowSim_plot<-function(df,plot_gate=F){
       polygon(hull_coords,border="red")
     }
   }
-  
   return(plot)
 }
-
 
 #' flowSim_plot_dens
 #' 
@@ -74,15 +60,15 @@ flowSim_plot_dens<-function(df){
   # density marker 1
   dens.chan1 <-density(df[,1])
   graphics::plot(dens.chan1, xlim=range(df[,1]), type="l", axes=F, frame.plot=F, ann=F)
-  pts <- .densRange(dens.chan1$x, dens.chan1$y, min(dens.chan1$x,na.rm = T), T)
-  polygon(pts$x, pts$y, col="#00ff0044", border= "#00ff00ff")
-
+  pts <- get_densRange(dens.chan1$x, dens.chan1$y, min(dens.chan1$x,na.rm = T), T)
+  polygon(pts$x, pts$y, col="grey", border= "black")
+  
   # density marker 2
   dens.chan2 <-density(df[,2])
   graphics::plot(dens.chan2$y, dens.chan2$x, ylim=range(df[,2]), xlim=rev(range(dens.chan2$y)),
                  type="l", col=1,frame.plot=F,axes=F,ann=F)
   pts <- get_densRange(dens.chan2$x, dens.chan2$y,min(dens.chan2$x,na.rm = T) , T)
-  polygon(pts$y, pts$x, col="#00ff0044", border= "#00ff00ff")
+  polygon(pts$y, pts$x, col="grey", border= "black")
   # bivariate density scatter plot 
   colPalette <- colorRampPalette(c("blue", "turquoise", "green", "yellow", "orange", "red"))
   col <- densCols(df[,c(1,2)], colramp = colPalette,nbin = 200) # get colors based on bivariate density
@@ -90,7 +76,6 @@ flowSim_plot_dens<-function(df){
   return(plot)
 }
 
- 
 #' get_densRange
 #' 
 #' function to get the correct coordinates (correct range) based on the density 
@@ -124,7 +109,7 @@ get_densRange <- function(x, y, thr, direction = FALSE){
 #' @param visnetdata list of dataframes containing the edges and nodes information in VisNetwork format
 #' @param show_legend show legend?
 #' @param remove_single_files If True, single files (black nodes) are removed from the analysis.
-#' @param select_group A vector indicating the names the groups to visualize. If NULL, 
+#' @param select_group A vector indicating the names of the groups to visualize. If NULL, 
 #' all groups are visualized. Default to NULL
 #' @param size_nodes Set size of the nodes. Default to NULL.
 #' @return VisNetwork object
@@ -140,7 +125,7 @@ plot_visnet<-function(visnetdata,show_legend=F,remove_single_files=F,select_grou
   lnodes <- data.frame(label = c("Grouped files","Grouped files","Grouped files","Isolated files"), 
                        shape = c("dot"), color = c("red","blue","yellow","black"),
                        title = "Informations")
-
+  
   # check type of visnetwork data (contracted vs uncontracted)
   check_group<-"group" %in% colnames(visnetdata$nodes)
   if(check_group==F){ # because contracted version (id=group),group column is NOT present
@@ -168,8 +153,7 @@ plot_visnet<-function(visnetdata,show_legend=F,remove_single_files=F,select_grou
   # set size nodes
   if(is.null(size_nodes)==F){
     visnetdata$nodes$size<-rep(size_nodes,nrow(visnetdata$nodes))
-  }
-  # generate network object
+  }  # generate network object
   visnet<-visNetwork(nodes = visnetdata$nodes, edges = visnetdata$edges,main = "plot clusters network") %>%
     visIgraphLayout(randomSeed = 40,physics = T,layout = "layout_nicely") %>%
     visOptions(highlightNearest = list(enabled =TRUE, degree = 1),selectedBy=list(variable=select_by,main="select by cluster")) %>%
@@ -178,7 +162,6 @@ plot_visnet<-function(visnetdata,show_legend=F,remove_single_files=F,select_grou
     visEdges(smooth = FALSE,color="black") %>%
     visLegend(enabled = show_legend,addNodes = lnodes,useGroups = F,width=0.5,ncol=3) %>%
     visEvents(type = "once",stabilizationIterationsDone="function () {this.setOptions( { physics: false } );}") # remove physiscs when stabilization iterations are done
-
   return(visnet)
 }
 

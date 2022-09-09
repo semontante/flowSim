@@ -1,7 +1,7 @@
 #' Import files to analyze
 #' 
-#' function to import all datasets in the input directory
-#' @param n_samples Number of files to analyze. If NULL, all files are analyzed Default to NULL.
+#' function to import all datasets of the input directory
+#' @param n_samples Number of files to analyze. If NULL, all files are analyzed. Default to NULL.
 #' @param paths_dir directory path of the input files to analyze
 #' @param paths_plots Mandatory if paths_dir==NULL, it is possible to feed a list of the paths of the input files to analyze
 #' @param n_cores The number of cores to use,default to 1
@@ -39,7 +39,20 @@ import_all_dfs<-function(n_samples=NULL,paths_dir=NULL,paths_plots=NULL,n_cores=
       stop("path_current_plot has lenght != 1")
     }
     print(path_current_plot)
-    df<-read.csv(path_current_plot)
+    df<-try(read.csv(path_current_plot))
+    if(is.data.frame(df)==F){
+      return(NULL)
+    }
+    if(is.numeric(df[,1])==F || is.numeric(df[,2])==F){
+      return(NULL)
+    }
+    if(any(is.na(df[,1]))==T || any(is.na(df[,2]))==T){
+      return(NULL)
+    }
+    if(length(df[,1])<6 || length(df[,2])<6){
+      return(NULL)
+      
+    }
     return(df)
   },mc.cores = n_cores)
   end<-Sys.time()
@@ -78,10 +91,14 @@ import_df_features<-function(n_samples=NULL,paths_dir,n_cores=1,progress_bar=T){
     opts <- list(progress=progress)
     list_all_plots_info<-foreach(i=1:length(paths_all_plots),.options.snow=opts) %dopar% {
       library(pracma)
-      
+      library(stats)
+      library(data.table)
       stringsplitted<-strsplit(paths_all_plots[i],"/")[[1]]
       plot_name<-tail(stringsplitted,1)
-      df<-read.csv(paths_all_plots[i])
+      df<-try(read.csv(paths_all_plots[i]))
+      if(is.data.frame(df)==F){
+        return(NULL)
+      }
       if(is.numeric(df[,1])==F || is.numeric(df[,2])==F){
         return(NULL)
       }
@@ -92,7 +109,6 @@ import_df_features<-function(n_samples=NULL,paths_dir,n_cores=1,progress_bar=T){
         return(NULL)
         
       }
-      
       density_m1<-(density(df[,1]))$y
       density_m2<-(density(df[,2]))$y
       density_m1<-density_m1/max(density_m1)
@@ -118,14 +134,17 @@ import_df_features<-function(n_samples=NULL,paths_dir,n_cores=1,progress_bar=T){
       return(final_vec)
       
     }
-    close(pb)
     stopCluster(cl)
+    close(pb)
   }else{
     list_all_plots_info<-mclapply(1:length(paths_all_plots),function(i){
       #print(i)
       stringsplitted<-strsplit(paths_all_plots[i],"/")[[1]]
       plot_name<-tail(stringsplitted,1)
-      df<-read.csv(paths_all_plots[i])
+      df<-try(read.csv(paths_all_plots[i]))
+      if(is.data.frame(df)==F){
+        return(NULL)
+      }
       if(is.numeric(df[,1])==F || is.numeric(df[,2])==F){
         return(NULL)
       }
@@ -136,7 +155,6 @@ import_df_features<-function(n_samples=NULL,paths_dir,n_cores=1,progress_bar=T){
         return(NULL)
         
       }
-      
       density_m1<-(density(df[,1]))$y
       density_m2<-(density(df[,2]))$y
       density_m1<-density_m1/max(density_m1)
@@ -164,6 +182,8 @@ import_df_features<-function(n_samples=NULL,paths_dir,n_cores=1,progress_bar=T){
   }
   print("---- combine all plots features in one df-------")
   df_features<-as.data.frame(do.call(rbind,list_all_plots_info),stringsAsFactors=F)
+  
+  
   colnames(df_features)<-c("plot_name","mean_m1","mean_m2",
                            "n_peaks_m1","n_peaks_m2","min_peak_m1","min_peak_m2","max_peak_m1",
                            "max_peak_m2","h_min_peak_m1","h_min_peak_m2","h_max_peak_m1","h_max_peak_m2")

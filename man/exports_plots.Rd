@@ -5,7 +5,7 @@
 \title{exports_plots}
 \usage{
 exports_plots(visnetdata, path_expr_data, path_output = NULL,
-  n_cores = 1, path_gates = NULL)
+  n_cores = 1, type = "dens", path_gates = NULL)
 }
 \arguments{
 \item{visnetdata}{list of dataframes containing the edges and nodes information in VisNetwork format}
@@ -20,7 +20,7 @@ If path_output=NULL, no plots are generated. Default to NULL}
 \item{path_gates}{Path of gates data, default to NULL}
 }
 \value{
-A list of the samples names for each group.
+A list of all file names for each group.
 }
 \description{
 function to export all plots for each group

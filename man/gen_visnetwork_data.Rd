@@ -8,7 +8,7 @@ gen_visnetwork_data(igraph_network, contract_net = F,
   single_nodes_black = T)
 }
 \arguments{
-\item{igraph_network}{Igraph network object}
+\item{igraph_network}{igraph network object}
 
 \item{contract_net}{If True, it generates a contracted version of the
 VisNetwork dataframes (to visualize large datasets). Default to False}

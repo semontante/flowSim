@@ -2,19 +2,21 @@
 % Please edit documentation in R/flowSim_similarity.R
 \name{get_similarity_all_plots}
 \alias{get_similarity_all_plots}
-\title{Generate similarity scores all files first version}
+\title{Generate similarity scores all files V1 mode}
 \usage{
-get_similarity_all_plots(n_samples = NULL, path_dir, thr_score = 0.9,
-  n_cores = 1)
+get_similarity_all_plots(n_samples = NULL, path_dir, thr_score = 0.6,
+  n_cores = 1, nboots = NULL)
 }
 \arguments{
-\item{n_samples}{Number of files to analyze. If NULL, all files are analyzed Default to NULL.}
+\item{n_samples}{Number of files to analyze. If NULL, all files are analyzed. Default to NULL.}
 
 \item{path_dir}{Path to tthe input directory}
 
-\item{thr_score}{Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.9}
+\item{thr_score}{Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.6}
 
 \item{n_cores}{Number of cores to use, default to 1}
+
+\item{nboots}{Number of bootstrap simulations for the  density identiy test. If NULL, it is set based on number of files anayzed. Default to NULL}
 }
 \value{
 A list of two dataframes
@@ -22,7 +24,7 @@ $edges : A dataframe containing edges information of the network. The weight of 
 $nodes : A dataframe containing several nodes information (Node ID,cluster color etc...)
 }
 \description{
-function to generate the similarity scores for all the files within the input directory. First version (for small datasets only,N<500).
+function to generate the similarity scores for all the files within the input directory. V1 mode (for small datasets only,N<500).
 }
 \examples{
 \donttest{get_similarity_all_plots(path_dir="path to input directory",thr_score=0.9,n_cores=1)}

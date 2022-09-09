@@ -14,7 +14,7 @@ plot_visnet(visnetdata, show_legend = F, remove_single_files = F,
 
 \item{remove_single_files}{If True, single files (black nodes) are removed from the analysis.}
 
-\item{select_group}{A vector indicating the names the groups to visualize. If NULL,
+\item{select_group}{A vector indicating the names of the groups to visualize. If NULL,
 all groups are visualized. Default to NULL}
 
 \item{size_nodes}{Set size of the nodes. Default to NULL.}

@@ -4,7 +4,8 @@
 \alias{import_df_features}
 \title{Import features set of all files}
 \usage{
-import_df_features(n_samples = NULL, paths_dir, n_cores = 1)
+import_df_features(n_samples = NULL, paths_dir, n_cores = 1,
+  progress_bar = T)
 }
 \arguments{
 \item{n_samples}{number of files to analyze}
@@ -12,6 +13,8 @@ import_df_features(n_samples = NULL, paths_dir, n_cores = 1)
 \item{paths_dir}{directory path of the input files to analyze}
 
 \item{n_cores}{The number of cores to use, default to 1}
+
+\item{progress_bar}{If False,progress bar is disabled. Default to True}
 }
 \value{
 a dataframe of the features set (columns) for each file (row)

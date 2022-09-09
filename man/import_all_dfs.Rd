@@ -8,7 +8,7 @@ import_all_dfs(n_samples = NULL, paths_dir = NULL,
   paths_plots = NULL, n_cores = 1)
 }
 \arguments{
-\item{n_samples}{Number of files to analyze. If NULL, all files are analyzed Default to NULL.}
+\item{n_samples}{Number of files to analyze. If NULL, all files are analyzed. Default to NULL.}
 
 \item{paths_dir}{directory path of the input files to analyze}
 
@@ -20,7 +20,7 @@ import_all_dfs(n_samples = NULL, paths_dir = NULL,
 list of all input dfs
 }
 \description{
-function to import all datasets in the input directory
+function to import all datasets of the input directory
 }
 \examples{
 import_all_dfs(paths_dir="path_to_input_directory",paths_plots=NULL,n_cores=1)

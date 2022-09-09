@@ -4,15 +4,13 @@
 \alias{show_plot}
 \title{show_plot}
 \usage{
-show_plot(path_data, name_plot, type = "classic")
+show_plot(path_data_file, type = "classic")
 }
 \arguments{
-\item{path_data}{Path to the directory with all the files}
-
-\item{name_plot}{Name of the file to show}
+\item{path_data_file}{Path to the csv files to visualize}
 
 \item{type}{type of visualization: "classic" or "dens". Default to classic.
-the "dens" version has the densities of the markers on the side of each axis.}
+the "dens" version has the density of the markers on the side of each axis.}
 }
 \value{
 Plot object

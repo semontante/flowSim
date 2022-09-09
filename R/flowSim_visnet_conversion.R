@@ -3,7 +3,7 @@
 #' 
 #' function to convert igraph network to a list of two VisNetwork dataframes containig 
 #' the edges and nodes information needed to generate a VisNetwork object
-#' @param igraph_network Igraph network object
+#' @param igraph_network igraph network object
 #' @param contract_net If True, it generates a contracted version of the 
 #' VisNetwork dataframes (to visualize large datasets). Default to False
 #' @param single_nodes_black Isolated files/nodes colored in black? Default to True.
@@ -26,7 +26,7 @@ gen_visnetwork_data<-function(igraph_network,contract_net=F,single_nodes_black=T
   print("-------generating edges width-----")
   width_column<-data$edges$weight*2
   data$edges$width<-width_column
-
+  
   #---------- modify label column ---------------
   print("----- modify label column --------")
   new_label_column<-paste(data$nodes$group,data$nodes$label,sep="--")
@@ -143,7 +143,7 @@ contract_data<-function(data){
   check_None<-sapply(list_info_connections,function(x){
     result_check<-x=="None"
     return(unique(result_check))
-    })
+  })
   inds<-which(check_None==T)
   list_info_connections<-list_info_connections[-inds]
   print(list_info_connections)
@@ -159,7 +159,7 @@ contract_data<-function(data){
   for(i in 1:length(all_groups_connected)){
     current_group_name<-all_groups_connected[i]
     info_connections_current_group<-list_info_connections[[current_group_name]]
-
+    
     unique_connected_group<-unique(info_connections_current_group)
     n_groups_connected<-length(unique_connected_group)
     vec_from_current_group<-rep(current_group_name,n_groups_connected)
@@ -197,7 +197,7 @@ contract_data<-function(data){
     group_to_temp<-data_edges_contracted_temp$to
     string_to_check<-paste(group_from_temp,group_to_temp,sep="+")
     if(nrow(data_edges_contracted_temp)!=0){
-        connections_to_fix<-c(connections_to_fix,string_to_check)
+      connections_to_fix<-c(connections_to_fix,string_to_check)
     }
   }
   print("------ connections to fix:")
