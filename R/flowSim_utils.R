@@ -237,3 +237,51 @@ rename_files<-function(path_dir,to_replace,string,to_replace_fixed=T){
     file.rename(old_path_i,new_path_i)
   })
 }
+
+#' get_csv
+#' 
+#' function to convert fcs files in bivariate csv files
+#' @param path path of the directory with fcs files to convert
+#' @param channels Vector reporting the two channels to consider
+#' @param markers Vector reporting the two markers to consider. Considered only if channels==NULL
+#' @param path.output directory path to export the converted csv files
+#' @return NULL
+#' @export
+#' @examples 
+#' \donttest{get_csv(path="path/to/directory",channels=c("FSC-A","FSC-H"),path.output="path/to/directory")}
+
+get_csv<-function(path,channels=NULL,markers=NULL,path.output){
+  if(is.null(channels)==T & is.null(markers)==T){
+    stop("channels and markers argument are both NULL")
+  }
+  FCSfiles_path_list <- list.files(path = path, recursive = F, pattern = ".fcs", full.names = T)
+  fcs_files_list <-lapply(FCSfiles_path_list,read.FCS) 
+  fs <- as(fcs_files_list,"flowSet")
+  all_markers<-fs[[1]]@parameters@data$desc
+  all_channels<-fs[[1]]@parameters@data$name
+  print("All channels:")
+  print(all_channels)
+  print("All markers:")
+  print(all_markers)
+  output<-sapply(1:length(fs),function(i){
+    frame<-fs[[i]]
+    if(is.null(channels)==T){
+      channels<-c("a","b")
+      ind_1_marker<-which(as.vector(frame@parameters@data$desc)==markers[1])
+      if(length(ind_1_marker)==0){
+        stop("marker 1 not found")
+      }
+      channels[1]<-frame@parameters@data$name[ind_1_marker]
+      ind_2_marker<-which(as.vector(frame@parameters@data$desc)==markers[2])
+      if(length(ind_2_marker)==0){
+        stop("marker 2 not found")
+      }
+      channels[2]<-frame@parameters@data$name[ind_2_marker]
+    }
+    df_data<-exprs(frame)[,channels]
+    name_file<-tail(strsplit(FCSfiles_path_list[i],"/")[[1]],1)
+    name_file<-gsub(name_file,pattern = ".fcs",replacement = ".csv")
+    write.table(df_data,file=paste0(path.output,"/",name_file), row.names=FALSE, sep=",")
+  })
+}
+

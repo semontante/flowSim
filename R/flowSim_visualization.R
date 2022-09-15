@@ -107,7 +107,6 @@ get_densRange <- function(x, y, thr, direction = FALSE){
 #' 
 #' function to plot the visnetwork based on the similarity scores
 #' @param visnetdata list of dataframes containing the edges and nodes information in VisNetwork format
-#' @param show_legend show legend?
 #' @param remove_single_files If True, single files (black nodes) are removed from the analysis.
 #' @param select_group A vector indicating the names of the groups to visualize. If NULL, 
 #' all groups are visualized. Default to NULL
@@ -116,16 +115,12 @@ get_densRange <- function(x, y, thr, direction = FALSE){
 #' @export
 #' @examples 
 #' \donttest{plot_visnet(visnetdata=visnetdata,show_legend=F,remove_single_files=F,select_group=NULL)}
-plot_visnet<-function(visnetdata,show_legend=F,remove_single_files=F,select_group=NULL,
+plot_visnet<-function(visnetdata,remove_single_files=F,select_group=NULL,
                       size_nodes=NULL){
   if(nrow(visnetdata$nodes)>4000){
     stop("too many nodes: plot contracted data")
   }
-  # define legend
-  lnodes <- data.frame(label = c("Grouped files","Grouped files","Grouped files","Isolated files"), 
-                       shape = c("dot"), color = c("red","blue","yellow","black"),
-                       title = "Informations")
-  
+
   # check type of visnetwork data (contracted vs uncontracted)
   check_group<-"group" %in% colnames(visnetdata$nodes)
   if(check_group==F){ # because contracted version (id=group),group column is NOT present
@@ -160,7 +155,7 @@ plot_visnet<-function(visnetdata,show_legend=F,remove_single_files=F,select_grou
     visInteraction(hideEdgesOnDrag = TRUE) %>%
     visPhysics(stabilization = list(enabled=T,iterations=100,updateInterval=5),timestep = 0.5,minVelocity = 10,maxVelocity = 50) %>%
     visEdges(smooth = FALSE,color="black") %>%
-    visLegend(enabled = show_legend,addNodes = lnodes,useGroups = F,width=0.5,ncol=3) %>%
+    visLegend(enabled = F) %>%
     visEvents(type = "once",stabilizationIterationsDone="function () {this.setOptions( { physics: false } );}") # remove physiscs when stabilization iterations are done
   return(visnet)
 }
