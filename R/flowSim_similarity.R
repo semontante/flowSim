@@ -5,7 +5,7 @@
 #' @param name_ref_plot file to analyze
 #' @param n_cores Number of cores to use
 #' @param names_analyzed_vec Vector containing the names of the files already analyzed in a previous iteration
-#' @param n_boots Number of simulations for the permutation identity test of marker expression densities
+#' @param nboots Number of bootstrap simulations for the density comparison. 
 #' @keywords Internal
 #' @return Dataframe of the similarity scores for the selected file
 get_similarity_selected_plot<-function(list_all_input_dfs,name_ref_plot,n_cores,
@@ -56,7 +56,7 @@ get_similarity_selected_plot<-function(list_all_input_dfs,name_ref_plot,n_cores,
 #' @param path_dir Path to tthe input directory
 #' @param thr_score Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.6
 #' @param n_cores Number of cores to use, default to 1
-#' @param nboots Number of bootstrap simulations for the  density identiy test. If NULL, it is set based on number of files anayzed. Default to NULL
+#' @param nboots Number of bootstrap simulations for the density comparison. If NULL, it is set based on number of files anayzed. Default to NULL
 #' @return A list of two dataframes
 #' $edges : A dataframe containing edges information of the network. The weight of each edge is the similarity score between the the two files/nodes
 #' $nodes : A dataframe containing several nodes information (Node ID,cluster color etc...)
@@ -280,7 +280,7 @@ get_similarity_all_plots_v2<-function(n_samples=NULL,path_dir,thr_score=0.9,
 #' @param path_dir Path to input directory. Mandatory.
 #' @param thr_score Threshold for filtering the similarity scores
 #' @param progress_bar If False,disable progress bar.
-#' @param nboots Number of bootstrap simulations for the  density identiy test. Default to 6
+#' @param nboots Number of bootstrap simulations for the  density identity test. Default to 6
 #' @keywords Internal
 #' @return List of results batch analysis
 
@@ -392,7 +392,7 @@ batches_analysis<-function(all_groups,n_cores,final_df,path_dir,thr_score,progre
       for(j in 1:length(plot_names)){
         current_plot_name<-plot_names[j]
         df_scores<-get_similarity_selected_plot(list_all_input_dfs = list_all_input_dfs_current_group,name_ref_plot = current_plot_name,
-                                                n_cores = n_cores, names_analyzed_vec=names_already_analyzed,n_boots = 6)
+                                                n_cores = n_cores, names_analyzed_vec=names_already_analyzed,n_boots = nboots)
         names_already_analyzed[j]<-current_plot_name
         list_df_scores[[j]]<-df_scores
       }
