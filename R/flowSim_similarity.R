@@ -30,8 +30,9 @@ get_similarity_selected_plot<-function(list_all_input_dfs,name_ref_plot,n_cores,
     plot_name_to<-names(list_all_input_dfs)[i]
     check_repetition<-plot_name_to %in% names_analyzed_vec
     if(check_repetition==F){
-      print(sprintf("comparison %s plot with %s",name_ref_plot,plot_name_to))
-      # calculate distance between selected ref data and test df
+      # calculate distance between selected ref data and test 
+      sink("/dev/null")
+      on.exit(sink())
       scores_markers<-get_distance_loc_vs_test(loc_df = df_ref,test_df = df,nboot = n_boots)
       score_marker_1<-scores_markers$pvalue_mark_1
       score_marker_2<-scores_markers$pvalue_mark_2
@@ -322,7 +323,6 @@ batches_analysis<-function(all_groups,n_cores,final_df,path_dir,thr_score,progre
                                                        n_cores = n_cores)
       #------------ Get all plot names ---------------
       # plot names will be  the nodes of our network
-      #print(sprintf("Total number of plots current group: %s",length(list_all_input_dfs_current_group)))
       plot_names<-names(list_all_input_dfs_current_group)
       #---------- get similarity scores -------------------
       #print("--------- get similarity scores plots current group ---------")
@@ -377,16 +377,13 @@ batches_analysis<-function(all_groups,n_cores,final_df,path_dir,thr_score,progre
         return(path_current_name)
       })
       #----- import list dfs current samples
-      print("------- import dfs samples current group------")
       list_all_input_dfs_current_group<-import_all_dfs(paths_plots = paths_plots_current_group,
                                                        n_cores = n_cores)
       #------------ Get all plot names ---------------
-      print("------- get all plot names current group------")
       # plot names will be  the nodes of our network
       #print(sprintf("Total number of plots current group: %s",length(list_all_input_dfs_current_group)))
       plot_names<-names(list_all_input_dfs_current_group)
       #---------- get similarity scores -------------------
-      print("--------- get similarity scores plots current group ---------")
       names_already_analyzed<-rep("a",length(plot_names))
       list_df_scores<-list()
       for(j in 1:length(plot_names)){
@@ -402,20 +399,17 @@ batches_analysis<-function(all_groups,n_cores,final_df,path_dir,thr_score,progre
       df_scores_all_plots$from<-as.character(df_scores_all_plots$from)
       df_scores_all_plots$to<-as.character(df_scores_all_plots$to)
       # remove loops (connections to same node)
-      #print("----- remove loops")
       check_loop<-df_scores_all_plots$from == df_scores_all_plots$to
       inds<-which(check_loop==T)
       if(length(inds)!=0){
         df_scores_all_plots<-df_scores_all_plots[-inds,]
       }
       # remove edges with weight < thr_score
-      #print("----- remove edges with weight <= threshold")
       inds<-which(df_scores_all_plots$weight<=thr_score)
       if(length(inds)!=0){
         df_scores_all_plots<-df_scores_all_plots[-inds,]
       }
       # make nodes df
-      #print("----- make nodes df")
       df_nodes<-as.data.frame(plot_names)
       colnames(df_nodes)<-"id"
       # update lists

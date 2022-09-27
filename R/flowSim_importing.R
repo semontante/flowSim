@@ -38,7 +38,6 @@ import_all_dfs<-function(n_samples=NULL,paths_dir=NULL,paths_plots=NULL,n_cores=
     if(length(path_current_plot)!=1){
       stop("path_current_plot has lenght != 1")
     }
-    print(path_current_plot)
     df<-try(read.csv(path_current_plot))
     if(is.data.frame(df)==F){
       return(NULL)
