@@ -155,7 +155,7 @@ myKmeans <- function(dist, k){
 #' otherwise it needs to be defined. As the value increases, less memory and time is required but also more residual homogeneity is generated.
 #' @param show_tsne_plot show scatter plot of tsne reduced dataset of the density features. Default to True.
 #' @param progress_bar if False,disable progress bar. Default to True.
-#' @param size_points_tsne Size of points in t-sne plot. Default to 2
+#' @param size_points_tsne Size of points in t-sne plot. Default to 5
 #' @param nboots Number of bootstrap simulations for the  density identiy test. Default to 6
 #' @return A list of three dataframes
 #' $edges : A dataframe containing edges information of the network. The weight of each edge is the similarity score between the the two files/nodes
@@ -167,7 +167,7 @@ myKmeans <- function(dist, k){
 
 get_similarity_all_plots_v2<-function(n_samples=NULL,path_dir,thr_score=0.9,
                                       n_cores=1,n_batches=NULL,show_tsne_plot=T,
-                                      progress_bar=T,size_points_tsne=15,nboots=6){
+                                      progress_bar=T,size_points_tsne=5,nboots=6){
   set.seed(40)
   start<-Sys.time()
   #---------- Features df -------------------

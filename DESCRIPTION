@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "semont93@gmail.com")
 Description: flowSim is a tool designed to remove redundant examples from a bivariate FCM dataset. It also includes several visualization options to easily identify the similarity relationships between the files. It can be used to improve the quality of training for machine learning algorithms or to identify outliers.
-License: `use_mit_license()`, `use_gpl3_license()`
+License: `use_gpl3_license()`
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
