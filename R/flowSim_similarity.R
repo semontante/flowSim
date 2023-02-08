@@ -55,6 +55,7 @@ get_similarity_selected_plot<-function(list_all_input_dfs,name_ref_plot,n_cores,
 #' function to generate the similarity scores for all the files within the input directory. V1 mode (for small datasets only,N<500).
 #' @param n_samples Number of files to analyze. If NULL, all files are analyzed. Default to NULL.
 #' @param path_dir Path to tthe input directory
+#' @param paths_plots Mandatory if paths_dir==NULL, it is possible to feed a list of the paths of the input files to analyze
 #' @param thr_score Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.6
 #' @param n_cores Number of cores to use, default to 1
 #' @param nboots Number of bootstrap simulations for the density comparison. If NULL, it is set based on number of files anayzed. Default to NULL
@@ -64,12 +65,12 @@ get_similarity_selected_plot<-function(list_all_input_dfs,name_ref_plot,n_cores,
 #' @export
 #' @examples 
 #' \donttest{get_similarity_all_plots(path_dir="path to input directory",thr_score=0.9,n_cores=1)}
-get_similarity_all_plots<-function(n_samples=NULL,path_dir,thr_score=0.6,
-                                   n_cores=1,nboots=NULL){
+get_similarity_all_plots<-function(n_samples=NULL,path_dir=NULL,thr_score=0.6,
+                                   n_cores=1,nboots=NULL,paths_plots=NULL){
   start<-Sys.time()
   #---------- Pre-allocation of input dfs-------------------
   print("------- Pre-allocation of data --------")
-  list_all_input_dfs<-import_all_dfs(n_samples=n_samples,paths_dir = path_dir,n_cores = n_cores)
+  list_all_input_dfs<-import_all_dfs(n_samples=n_samples,paths_dir = path_dir,n_cores = n_cores,paths_plots = paths_plots)
   #------------ Get all plot names ---------------
   # plot names will be  the nodes of our network
   print(sprintf("Total number of plots: %s",length(list_all_input_dfs)))

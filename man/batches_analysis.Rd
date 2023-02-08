@@ -20,7 +20,7 @@ batches_analysis(all_groups, n_cores, final_df, path_dir, thr_score,
 
 \item{progress_bar}{If False,disable progress bar.}
 
-\item{nboots}{Number of bootstrap simulations for the  density identiy test. Default to 6}
+\item{nboots}{Number of bootstrap simulations for the  density identity test. Default to 6}
 }
 \value{
 List of results batch analysis

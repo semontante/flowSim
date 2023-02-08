@@ -4,13 +4,11 @@
 \alias{plot_visnet}
 \title{plot_visnet}
 \usage{
-plot_visnet(visnetdata, show_legend = F, remove_single_files = F,
-  select_group = NULL, size_nodes = NULL)
+plot_visnet(visnetdata, remove_single_files = F, select_group = NULL,
+  size_nodes = NULL)
 }
 \arguments{
 \item{visnetdata}{list of dataframes containing the edges and nodes information in VisNetwork format}
-
-\item{show_legend}{show legend?}
 
 \item{remove_single_files}{If True, single files (black nodes) are removed from the analysis.}
 

@@ -6,7 +6,7 @@
 \usage{
 get_similarity_all_plots_v2(n_samples = NULL, path_dir,
   thr_score = 0.9, n_cores = 1, n_batches = NULL,
-  show_tsne_plot = T, progress_bar = T, size_points_tsne = 15,
+  show_tsne_plot = T, progress_bar = T, size_points_tsne = 5,
   nboots = 6)
 }
 \arguments{
@@ -26,7 +26,7 @@ otherwise it needs to be defined. As the value increases, less memory and time i
 
 \item{progress_bar}{if False,disable progress bar. Default to True.}
 
-\item{size_points_tsne}{Size of points in t-sne plot. Default to 2}
+\item{size_points_tsne}{Size of points in t-sne plot. Default to 5}
 
 \item{nboots}{Number of bootstrap simulations for the  density identiy test. Default to 6}
 }

@@ -110,19 +110,11 @@ exports_plots<-function(visnetdata,path_expr_data,path_output=NULL,n_cores=1,typ
 exports_filtered_plots<-function(visnetdata,df_features,path_expr_data,
                                  path_output=NULL,n_cores=1,type="dens",filter_thr=2.1,
                                  plot_dendrogram=F,seed_n=40){
-  set.seed(40)
+  set.seed(seed_n)
   nodes_data<-visnetdata$nodes
   nodes_data$group<-as.numeric(nodes_data$group)
   groups<-unique(nodes_data$group)
-  ################ get path expression files ----------
-  print("----- get path expression files -----")
-  path_exprs_data_files<-list.files(path_expr_data,full.names = T,pattern = "*.csv",recursive = T)
-  path_exprs_data_files_vec<-sapply(1:length(path_exprs_data_files),function(i){
-    current_path<-path_exprs_data_files[i]
-    splitted_path<-strsplit(current_path,"/")[[1]]
-    name_path<-tail(splitted_path,1)
-    return(name_path)
-  })
+
   ################ export filtered plots of subgroups 
   print("------ export filtered plots of subgroups -------")
   info_exporting<-mclapply(1:length(groups),function(i){
@@ -196,6 +188,15 @@ exports_filtered_plots<-function(visnetdata,df_features,path_expr_data,
     }
     #---------- export samples selected---------------
     if(is.null(path_output)==F){
+      ################ get path expression files ----------
+      print("----- get path expression files -----")
+      path_exprs_data_files<-list.files(path_expr_data,full.names = T,pattern = "*.csv",recursive = T)
+      path_exprs_data_files_vec<-sapply(1:length(path_exprs_data_files),function(i){
+        current_path<-path_exprs_data_files[i]
+        splitted_path<-strsplit(current_path,"/")[[1]]
+        name_path<-tail(splitted_path,1)
+        return(name_path)
+      })
       print("export samples selected")
       #print(samples_names_selected)
       for(sample_name in samples_names_selected){

@@ -16,7 +16,7 @@ get_similarity_selected_plot(list_all_input_dfs, name_ref_plot, n_cores,
 
 \item{names_analyzed_vec}{Vector containing the names of the files already analyzed in a previous iteration}
 
-\item{n_boots}{Number of simulations for the permutation identity test of marker expression densities}
+\item{nboots}{Number of bootstrap simulations for the density comparison.}
 }
 \value{
 Dataframe of the similarity scores for the selected file

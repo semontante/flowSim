@@ -68,16 +68,23 @@ import_all_dfs<-function(n_samples=NULL,paths_dir=NULL,paths_plots=NULL,n_cores=
 #' function to import the features set of all the files under analysis
 #' @param n_samples number of files to analyze
 #' @param paths_dir directory path of the input files to analyze
+#' @param paths_plots Mandatory if paths_dir==NULL, it is possible to feed a list of the paths of the input files to analyze
 #' @param n_cores The number of cores to use, default to 1
 #' @param progress_bar If False,progress bar is disabled. Default to True
 #' @return a dataframe of the features set (columns) for each file (row)
 #' @export
 #' @examples 
 #' import_df_features(n_samples=1:5,paths_dir="path_to_input_directory",n_cores=1)
-import_df_features<-function(n_samples=NULL,paths_dir,n_cores=1,progress_bar=T){
+import_df_features<-function(n_samples=NULL,paths_dir=NULL,n_cores=1,paths_plots=NULL,progress_bar=T){
   start<-Sys.time()
   print("--- get paths all plots -----")
-  paths_all_plots<-list.files(paths_dir,full.names = T,pattern = "*.csv",recursive = T)
+  if(is.null(paths_dir)==T && is.null(paths_plots)==T){
+    stop("Path error: specify a folder or a list of paths")
+  }else if(is.null(paths_dir)==F){
+    paths_all_plots<-list.files(paths_dir,full.names = T,pattern = "*.csv",recursive = T)
+  }else if(is.null(paths_dir)==T){
+    paths_all_plots<-paths_plots
+  }  
   if(is.null(n_samples)==F){
     paths_all_plots<-paths_all_plots[n_samples]
   }

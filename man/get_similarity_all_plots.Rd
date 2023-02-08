@@ -4,8 +4,8 @@
 \alias{get_similarity_all_plots}
 \title{Generate similarity scores all files V1 mode}
 \usage{
-get_similarity_all_plots(n_samples = NULL, path_dir, thr_score = 0.6,
-  n_cores = 1, nboots = NULL)
+get_similarity_all_plots(n_samples = NULL, path_dir = NULL,
+  thr_score = 0.6, n_cores = 1, nboots = NULL, paths_plots = NULL)
 }
 \arguments{
 \item{n_samples}{Number of files to analyze. If NULL, all files are analyzed. Default to NULL.}
@@ -16,7 +16,9 @@ get_similarity_all_plots(n_samples = NULL, path_dir, thr_score = 0.6,
 
 \item{n_cores}{Number of cores to use, default to 1}
 
-\item{nboots}{Number of bootstrap simulations for the  density identiy test. If NULL, it is set based on number of files anayzed. Default to NULL}
+\item{nboots}{Number of bootstrap simulations for the density comparison. If NULL, it is set based on number of files anayzed. Default to NULL}
+
+\item{paths_plots}{Mandatory if paths_dir==NULL, it is possible to feed a list of the paths of the input files to analyze}
 }
 \value{
 A list of two dataframes
