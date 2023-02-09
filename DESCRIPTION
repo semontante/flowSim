@@ -20,16 +20,15 @@ Imports:
 	visNetwork,
 	RColorBrewer,
 	utils,
-	pracma,
 	stats,
 	Rtsne,
 	ggplot2,
 	doSNOW,
 	foreach,
-	NbClust,
-	anocva,
-	stringr
+	anocva
 Suggests:
 	flowCore,
 	knitr,
-	rmarkdown
+	rmarkdown,
+	devtools
+
