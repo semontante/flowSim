@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r setup}
+library(flowSim)
+```
+
 This document describes the usage of the main flowSim functions and reports examples of typical flowSim scripts.
 
 ## Introduction
