@@ -94,7 +94,10 @@ inds_selected_files<-get_inds_files_selected(path_dir = fpath,
                                              files_selected = files_to_analyze) 
 
 # Where files_to_analyze = vector of files names to analyze.
-out<-get_similarity_all_plots_v2(n_samples=inds_selected_files,path_dir = fpath) 
+out<-get_similarity_all_plots_v2(n_samples=inds_selected_files,path_dir = fpath)
+
+# Analyze only 2nd and 3rd file path: based on list.files(fpath,full.names=T)
+out<-get_similarity_all_plots_v2(n_samples=c(2,3),path_dir = fpath)
 
 ```
 
