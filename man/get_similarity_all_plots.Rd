@@ -8,7 +8,7 @@ get_similarity_all_plots(n_samples = NULL, path_dir = NULL,
   thr_score = 0.6, n_cores = 1, nboots = NULL, paths_plots = NULL)
 }
 \arguments{
-\item{n_samples}{Number of files to analyze. If NULL, all files are analyzed. Default to NULL.}
+\item{n_samples}{Indices of files paths extracted from list.files(path_dir). If NULL, all files in path_dir are analyzed. Default to NULL.}
 
 \item{path_dir}{Path to tthe input directory}
 

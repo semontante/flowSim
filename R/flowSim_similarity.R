@@ -53,7 +53,7 @@ get_similarity_selected_plot<-function(list_all_input_dfs,name_ref_plot,n_cores,
 #' Generate similarity scores all files V1 mode
 #' 
 #' function to generate the similarity scores for all the files within the input directory. V1 mode (for small datasets only,N<500).
-#' @param n_samples Number of files to analyze. If NULL, all files are analyzed. Default to NULL.
+#' @param n_samples Indices of files paths extracted from list.files(path_dir). If NULL, all files in path_dir are analyzed. Default to NULL.
 #' @param path_dir Path to tthe input directory
 #' @param paths_plots Mandatory if paths_dir==NULL, it is possible to feed a list of the paths of the input files to analyze
 #' @param thr_score Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.6
@@ -147,7 +147,7 @@ myKmeans <- function(dist, k){
 #' Generate similarity scores all files V2 mode
 #' 
 #' function to generate the similarity scores for all the files within the input directory. V2 mode (for big datasets)
-#' @param n_samples Number of files to analyze. If NULL, all input files are anayzed. Default to NULL. 
+#' @param n_samples Indices of files paths extracted from list.files(path_dir). If NULL, all files in path_dir are analyzed. Default to NULL.
 #' @param path_dir Path to input directory. Mandatory.
 #' @param thr_score Treshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.9
 #' @param n_cores Number of cores to use, default to 1
