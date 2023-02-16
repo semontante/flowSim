@@ -12,7 +12,8 @@ get_similarity_all_plots(n_samples = NULL, path_dir = NULL,
 
 \item{path_dir}{Path to tthe input directory}
 
-\item{thr_score}{Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.6}
+\item{thr_score}{Threshold for filtering only the most significant similarity score, it ranges from 0 to 1. Default to 0.6.
+Note: thr=0, keep all edges except edges with 0 weight. To keep all edges set thr="all".}
 
 \item{n_cores}{Number of cores to use, default to 1}
 
