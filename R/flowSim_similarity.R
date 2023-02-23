@@ -254,13 +254,7 @@ batches_analysis<-function(all_groups,n_cores,final_df,path_dir,thr_score,progre
       library(stats)
       library(Rtsne)
       library(ggplot2)
-      source("/home/rstudio/code/flowSim_similarity.R")
-      source("/home/rstudio/code/flowSim_utils.R")
-      source("/home/rstudio/code/flowSim_visnet_conversion.R")
-      source("/home/rstudio/code/flowSim_visualization.R")
-      source("/home/rstudio/code/flowSim_igraph_clustering.R")
-      source("/home/rstudio/code/flowSim_exporting.R")
-      source("/home/rstudio/code/flowSim_importing.R")
+      library(flowSim)
       current_group<-all_groups[i]
       #--- select samples name current group
       inds<-which(final_df$clusters==current_group)
